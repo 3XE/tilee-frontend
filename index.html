@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Tilee</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+        <style type="text/css">
+            body {
+                font-family:sans-serif;
+                margin:0;
+                padding:0;
+            }
+
+            #controls {
+                background: black;
+                color: #efefef;
+            }
+
+            .tileSize {
+                white-space: nowrap;
+                word-spacing: 0;
+            }
+            .tileSize span {
+                float:left;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="controls">
+            <div data-bind="with: activeTile">
+                <span data-bind="text: name"></span>
+            </div>
+            <div data-bind="visible: choosingTile">
+                <table>
+                    <tbody data-bind="foreach: tiles">
+                        <tr>
+                            <td>
+                                <input type="radio" name="tiles" data-bind="checked: $root.activeTile, checkedValue: $data" />
+                            </td>
+                            <td data-bind="text: name"></td>
+                            <td class="tileSize">
+                                    <span>(</span>
+                                    <span data-bind="text: width"></span>
+                                    <span data-bind="text: unit"></span>
+                                    <span>x</span>
+                                    <span data-bind="text: height"></span>
+                                    <span data-bind="text: unit"></span>
+                                    <span>)</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="src/main.js"></script>
+    </body>
+</html>
