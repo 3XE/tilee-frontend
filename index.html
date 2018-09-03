@@ -13,6 +13,12 @@
             #controls {
                 background: black;
                 color: #efefef;
+                display: flex;
+            }
+
+            #controls div {
+                border-left:1px white dashed;
+                padding:0 1em;
             }
 
             .tileSize {
@@ -22,33 +28,69 @@
             .tileSize span {
                 float:left;
             }
+
+            #tileCount {
+                font-size:3em;
+            }
+
+            th {
+                text-align:left;
+            }
         </style>
     </head>
     <body>
         <div id="controls">
-            <div data-bind="with: activeTile">
-                <span data-bind="text: name"></span>
+            <div>
+                <h2>Tile Size</h2>
+                <span data-bind="text: activeTile().name"></span>
+                <button data-bind="click: function () { choosingTile(!choosingTile()) }">⚙</button>
+                <div data-bind="visible: choosingTile">
+                        <table>
+                            <tbody data-bind="foreach: tiles">
+                                <tr>
+                                    <td>
+                                        <input type="radio" name="tiles" data-bind="checked: $root.activeTile, checkedValue: $data" />
+                                    </td>
+                                    <td data-bind="text: name"></td>
+                                    <td class="tileSize">
+                                            <span>(</span>
+                                            <span data-bind="text: width"></span>
+                                            <span data-bind="text: unit"></span>
+                                            <span>x</span>
+                                            <span data-bind="text: height"></span>
+                                            <span data-bind="text: unit"></span>
+                                            <span>)</span>
+                                        </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
-            <div data-bind="visible: choosingTile">
+            <div>
+                <h2>Pattern</h2>
+                <select data-bind="options: patterns,
+                optionsText: 'name',
+                value: selectedPattern"></select>
+            </div>
+            <div>
+                <h2>Wall</h2>
                 <table>
-                    <tbody data-bind="foreach: tiles">
-                        <tr>
-                            <td>
-                                <input type="radio" name="tiles" data-bind="checked: $root.activeTile, checkedValue: $data" />
-                            </td>
-                            <td data-bind="text: name"></td>
-                            <td class="tileSize">
-                                    <span>(</span>
-                                    <span data-bind="text: width"></span>
-                                    <span data-bind="text: unit"></span>
-                                    <span>x</span>
-                                    <span data-bind="text: height"></span>
-                                    <span data-bind="text: unit"></span>
-                                    <span>)</span>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <th><label for="wallWidth">Width</label></th>
+                        <th><label for="wallHeight">Height</label></th>
+                    </tr>
+                    <tr>
+                        <td><input id="wallWidth" type="number" data-bind="value: wall.width"/></td>
+                        <td><input id="wallHeight" type="number" data-bind="value: wall.height"/></td>                   
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>Area:</strong>&nbsp;<span data-bind="text: wall.area"></span></td>
+                    </tr>
                 </table>
+            </div>
+            <div>
+                <h1>Count</h1>
+                <span id="tileCount" data-bind="text: tileCount"></span>
             </div>
         </div>
         <script src="src/main.js"></script>
